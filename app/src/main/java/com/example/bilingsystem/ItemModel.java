@@ -45,12 +45,5 @@ public class ItemModel {
         this.itemTotal = itemTotal;
     }
 
-//    public String getAllItemTotal() {
-//        return allItemTotal;
-//    }
-//
-//    public void setAllItemTotal(String allItemTotal) {
-//        this.allItemTotal = allItemTotal;
-//    }
 }
 

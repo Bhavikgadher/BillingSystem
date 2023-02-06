@@ -108,7 +108,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="Cancel"
                 android:textColor="@color/black"
-                app:backgroundTint="@color/red"
+                app:backgroundTint="@color/transparent_black"
                 app:cornerRadius="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_okay"

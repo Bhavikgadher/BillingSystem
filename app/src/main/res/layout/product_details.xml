@@ -11,13 +11,13 @@
         android:paddingHorizontal="2dp"
         android:paddingVertical="4dp">
 
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal"
+
             android:paddingVertical="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
