@@ -3,56 +3,93 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data></data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
         tools:context=".MainActivity">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="10dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/ge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="10dp" />
+
         <include
             android:id="@+id/app_bar_main"
             layout="@layout/app_bar_main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="32dp"
+            app:layout_constraintEnd_toEndOf="@+id/ge"
+            app:layout_constraintStart_toStartOf="@+id/gs"
             app:layout_constraintTop_toTopOf="parent" />
-        <include
-            android:id="@+id/company_details_layout"
-            layout="@layout/company_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_bar_main" />
 
-        <include
-            android:id="@+id/customer_details_layout"
-            layout="@layout/customer_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/product_details_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/company_details_layout" />
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="64dp"
+            android:layout_marginBottom="64dp"
+            app:layout_constraintBottom_toTopOf="@+id/btn_print"
+            app:layout_constraintEnd_toEndOf="@id/ge"
+            app:layout_constraintStart_toStartOf="@+id/gs"
+            app:layout_constraintTop_toBottomOf="@+id/app_bar_main">
 
-        <include
-            android:id="@+id/product_details_layout"
-            layout="@layout/product_details"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/print_btn"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/customer_details_layout" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/ge"
+                app:layout_constraintStart_toStartOf="@+id/gs"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteY="397dp">
+
+
+                <include
+                    android:id="@+id/company_details_layout"
+                    layout="@layout/company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/ge"
+                    app:layout_constraintStart_toStartOf="@+id/gs"
+                    app:layout_constraintTop_toBottomOf="@+id/app_bar_main" />
+
+                <include
+                    android:id="@+id/customer_details_layout"
+                    layout="@layout/customer_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/ge"
+                    app:layout_constraintStart_toStartOf="@+id/gs"
+                    app:layout_constraintTop_toBottomOf="@+id/company_details_layout" />
+
+                <include
+                    android:id="@+id/product_details_layout"
+                    layout="@layout/product_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/ge"
+                    app:layout_constraintHeight="wrap_content_constrained"
+                    app:layout_constraintHeight_default="wrap"
+                    app:layout_constraintStart_toStartOf="@+id/gs"
+                    app:layout_constraintTop_toBottomOf="@+id/customer_details_layout" />
+
+            </LinearLayout>
+        </ScrollView>
 
         <Button
-            android:id="@+id/print_btn"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_print"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
@@ -61,8 +98,12 @@
             android:text="Done"
             android:textColor="@color/white"
             android:textSize="16sp"
+            app:layout_constrainedHeight="true"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/ge"
+            app:layout_constraintStart_toStartOf="@+id/gs" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <data></data>
 </layout>

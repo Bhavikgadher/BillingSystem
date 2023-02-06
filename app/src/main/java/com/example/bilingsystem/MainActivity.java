@@ -1,56 +1,49 @@
 package com.example.bilingsystem;
 
-import static com.example.bilingsystem.ItemAdapter.productItemList;
+import static com.example.bilingsystem.Constant.ADD_EDIT_ITEM;
+import static com.example.bilingsystem.Constant.DELETE_ITEM;
+import static com.example.bilingsystem.Constant.ROOT_VIEW;
+
+import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import com.example.bilingsystem.databinding.ActivityMainBinding;
 
-import java.sql.Time;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.SimpleTimeZone;
-import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private ItemAdapter itemAdapter;
-    public static List<ItemModel> itemModelList;
+    private List<ItemModel> itemModelList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate( savedInstanceState );
-        binding = DataBindingUtil.setContentView( this, R.layout.activity_main );
-        setSupportActionBar( binding.appBarMain.toolbar );
-        getSupportActionBar().setDisplayShowTitleEnabled( false );
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        setSupportActionBar(binding.appBarMain.toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Thread timeDate = new Thread() {
             @Override
             public void run() {
                 try {
                     while (!interrupted()) {
-                        Thread.sleep( 1000 );
-                        runOnUiThread( new Runnable() {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 long data = System.currentTimeMillis();
-                                SimpleDateFormat date = new SimpleDateFormat( "dd MMM yyyy          -        hh-mm-ss a" );
-                                String dataString = date.format( data );
-                                binding.companyDetailsLayout.date.setText( dataString );
+                                SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy          -        hh-mm-ss a");
+                                String dataString = date.format(data);
+                                binding.companyDetailsLayout.date.setText(dataString);
                             }
-                        } );
+                        });
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -59,35 +52,41 @@ public class MainActivity extends AppCompatActivity {
         };
         timeDate.start();
 
+
         itemModelList = new ArrayList<>();
-        itemModelList.add( new ItemModel( "1", "Ghughara", "5", "44", "451" ) );
-        itemModelList.add( new ItemModel( "2", "PaniPuri", "", "", "" ) );
-        itemModelList.add( new ItemModel( "3", "BhelPuri", "", "", "" ) );
-        itemModelList.add( new ItemModel( "4", "Ragado", "", "", "" ) );
-
-        itemAdapter = new ItemAdapter( itemModelList );
-        binding.productDetailsLayout.productRv.setAdapter( itemAdapter );
-        itemAdapter.notifyDataSetChanged();
-
-        binding.companyDetailsLayout.imageButton.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addItem();
+        itemAdapter = new ItemAdapter(itemModelList, (msg, position, itemModel) -> {
+            switch (msg) {
+                case ROOT_VIEW:
+                    ItemAddEditDialog dialog = new ItemAddEditDialog(this, (message, pos, model) -> {
+                        if (message == ADD_EDIT_ITEM) {
+                            itemModelList.set(position, model);
+                            itemAdapter.notifyDataSetChanged();
+                        }
+                    }, itemModel);
+                    dialog.showDialog();
+                    break;
+                case DELETE_ITEM:
+                    itemModelList.remove(position);
+                    itemAdapter.notifyDataSetChanged();
+                    break;
             }
-        } );
+        });
+        binding.productDetailsLayout.productRv.setAdapter(itemAdapter);
 
-        binding.printBtn.setOnClickListener( new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText( MainActivity.this, "Billing Done", Toast.LENGTH_SHORT ).show();
-            }
-        } );
+        binding.companyDetailsLayout.btnAddItem.setOnClickListener(v -> addItem());
+
+        binding.btnPrint.setOnClickListener(v -> Toast.makeText(MainActivity.this, "Billing Done", Toast.LENGTH_SHORT).show());
 
     }
 
     private void addItem() {
-        itemModelList.add( new ItemModel( "1", "bha", "2", "36", "72" ) );
-
+        ItemAddEditDialog dialog = new ItemAddEditDialog(this, (message, pos, model) -> {
+            if (message == ADD_EDIT_ITEM) {
+                itemModelList.add(model);
+                itemAdapter.notifyDataSetChanged();
+            }
+        });
+        dialog.showDialog();
     }
 
 }

@@ -1,43 +1,16 @@
 package com.example.bilingsystem;
 
-import static com.example.bilingsystem.ItemAdapter.productItemList;
-import static com.example.bilingsystem.MainActivity.itemModelList;
-
-import android.app.Dialog;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class ItemModel {
-    private String itemNo;
     private String itemName;
     private String itemQuantity;
     private String itemPrice;
     private String itemTotal;
-//    private String allItemTotal;
 
-    public ItemModel(String itemNo, String itemName, String itemQuantity, String itemPrice, String itemTotal /* String allItemTotal*/) {
-        this.itemNo = itemNo;
+    public ItemModel(String itemName, String itemQuantity, String itemPrice, String itemTotal) {
         this.itemName = itemName;
         this.itemQuantity = itemQuantity;
         this.itemPrice = itemPrice;
         this.itemTotal = itemTotal;
-//        this.allItemTotal = allItemTotal;
-    }
-
-    public String getItemNo() {
-        return itemNo;
-    }
-
-    public void setItemNo(String itemNo) {
-        this.itemNo = itemNo;
     }
 
     public String getItemName() {
@@ -80,3 +53,4 @@ public class ItemModel {
 //        this.allItemTotal = allItemTotal;
 //    }
 }
+
