@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Billing System</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="suffix_rs">Rs.%d</string>
+    <string name="suffix_rs_dash">Rs.%s/-</string>
+
+    <string-array name="weight">
+        <item>Kg</item>
+        <item>Gram</item>
+    </string-array>
 </resources>

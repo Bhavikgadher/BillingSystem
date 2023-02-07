@@ -56,18 +56,18 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_price"
+                android:id="@+id/til_unit_price"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:hint="Price per unit"
+                android:hint="Unit price"
                 app:layout_constraintEnd_toEndOf="@+id/ge"
                 app:layout_constraintStart_toStartOf="@+id/gs"
                 app:layout_constraintTop_toBottomOf="@+id/til_product">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/tie_price"
+                    android:id="@+id/tie_unit_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
@@ -76,17 +76,18 @@
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/til_qty"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="4dp"
                 android:hint="Quantity"
-                app:layout_constraintEnd_toEndOf="@+id/ge"
+                app:layout_constraintHorizontal_weight="2.5"
+                app:layout_constraintEnd_toStartOf="@+id/til_uom"
                 app:layout_constraintStart_toStartOf="@+id/gs"
-                app:layout_constraintTop_toBottomOf="@+id/til_price">
+                app:layout_constraintTop_toBottomOf="@+id/til_unit_price">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/tie_qty"
@@ -94,6 +95,52 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/black"
                     android:ems="10"
+                    android:inputType="number"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_uom"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintEnd_toEndOf="@+id/ge"
+                app:layout_constraintStart_toEndOf="@+id/til_qty"
+                app:layout_constraintTop_toTopOf="@+id/til_qty">
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_uom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:inputType="none"
+                    android:textColor="@color/black" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_price"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Price per unit"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                app:layout_constraintEnd_toEndOf="@+id/ge"
+                app:layout_constraintStart_toStartOf="@+id/gs"
+                app:layout_constraintTop_toBottomOf="@+id/til_qty">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tie_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/black"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:enabled="false"
                     android:inputType="number"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +160,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_okay"
                 app:layout_constraintStart_toStartOf="@+id/gs"
-                app:layout_constraintTop_toBottomOf="@+id/til_qty"
+                app:layout_constraintTop_toBottomOf="@+id/til_price"
                 app:layout_constraintVertical_bias="0" />
 
             <com.google.android.material.button.MaterialButton

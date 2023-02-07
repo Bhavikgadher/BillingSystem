@@ -3,6 +3,7 @@ package com.example.bilingsystem;
 import static com.example.bilingsystem.Constant.DELETE_ITEM;
 import static com.example.bilingsystem.Constant.ROOT_VIEW;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -48,12 +49,13 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
         }
 
         void bind(int position) {
+            Context ctx = itemLayoutBinding.getRoot().getContext();
             ItemModel model = productItemList.get(position);
             itemLayoutBinding.tvNumber.setText(String.valueOf(getAdapterPosition() + 1));
             itemLayoutBinding.tvProductName.setText(model.getItemName());
             itemLayoutBinding.tvQuantity.setText(model.getItemQuantity());
-            itemLayoutBinding.tvPrice.setText(String.format("Rs.%s/-", model.getItemPrice()));
-            itemLayoutBinding.tvProductTotal.setText(String.format("Rs.%s/-", model.getItemTotal()));
+            itemLayoutBinding.tvPrice.setText( model.getItemPrice());
+            itemLayoutBinding.tvProductTotal.setText(String.format(ctx.getString( R.string.suffix_rs_dash), model.getItemTotal()));
             itemLayoutBinding.btnRemove.setOnClickListener(v -> listener.onClick(DELETE_ITEM, position, model));
             itemLayoutBinding.getRoot().setOnClickListener(view -> listener.onClick(ROOT_VIEW, position, model));
         }
