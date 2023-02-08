@@ -3,7 +3,7 @@ package com.example.bilingsystem;
 import static com.example.bilingsystem.Constant.ADD_EDIT_ITEM;
 import static com.example.bilingsystem.Constant.DELETE_ITEM;
 import static com.example.bilingsystem.Constant.ROOT_VIEW;
-import static com.example.bilingsystem.Util.stringToInt;
+import static com.example.bilingsystem.Util.stringToFloat;
 
 import android.os.Bundle;
 import android.widget.Toast;
@@ -61,16 +61,16 @@ public class MainActivity extends AppCompatActivity {
                     ItemAddEditDialog dialog = new ItemAddEditDialog( this, (message, pos, model) -> {
                         if (message == ADD_EDIT_ITEM) {
                             itemModelList.set( position, model );
-                            itemAdapter.notifyDataSetChanged();
                             binding.productDetailsLayout.allItmeTotalAmount.setText( String.format( getString( R.string.suffix_rs), calculateTotal() ) );
+                            itemAdapter.notifyDataSetChanged();
                         }
                     }, itemModel );
                     dialog.showDialog();
                     break;
                 case DELETE_ITEM:
                     itemModelList.remove( position );
-                    itemAdapter.notifyDataSetChanged();
                     binding.productDetailsLayout.allItmeTotalAmount.setText( String.format( getString( R.string.suffix_rs), calculateTotal() ) );
+                    itemAdapter.notifyDataSetChanged();
                     break;
             }
         } );
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         ItemAddEditDialog dialog = new ItemAddEditDialog( this, (message, pos, model) -> {
             if (message == ADD_EDIT_ITEM) {
                 itemModelList.add( model );
-                itemAdapter.notifyDataSetChanged();
                 binding.productDetailsLayout.allItmeTotalAmount.setText( String.format( getString( R.string.suffix_rs), calculateTotal() ) );
+                itemAdapter.notifyDataSetChanged();
             }
         } );
         dialog.showDialog();
@@ -97,9 +97,9 @@ public class MainActivity extends AppCompatActivity {
         int allItemTotal = 0;
         for (int i = 0; i < itemModelList.size(); i++) {
             ItemModel itemModel = itemModelList.get( i );
-            int productTotal = stringToInt(itemModel.getItemTotal());
+            float productTotal = stringToFloat(itemModel.getTotal());
             if (productTotal != -1) {
-                allItemTotal +=productTotal;
+                allItemTotal += productTotal;
             }
         }
         return allItemTotal;

@@ -52,10 +52,12 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
             Context ctx = itemLayoutBinding.getRoot().getContext();
             ItemModel model = productItemList.get(position);
             itemLayoutBinding.tvNumber.setText(String.valueOf(getAdapterPosition() + 1));
-            itemLayoutBinding.tvProductName.setText(model.getItemName());
-            itemLayoutBinding.tvQuantity.setText(model.getItemQuantity());
-            itemLayoutBinding.tvPrice.setText( model.getItemPrice());
-            itemLayoutBinding.tvProductTotal.setText(String.format(ctx.getString( R.string.suffix_rs_dash), model.getItemTotal()));
+            itemLayoutBinding.tvProductName.setText(model.getName());
+            itemLayoutBinding.tvQuantity.setText(model.getQuantity()+" "+model.getWeight());
+            itemLayoutBinding.tvPrice.setText( model.getPrice() );
+            itemLayoutBinding.tvProductTotal.setText( model.getTotal() );
+//            itemLayoutBinding.tvPrice.setText(String.format(ctx.getString( R.string.suffix_rs_dash), model.getItemPrice()));
+//            itemLayoutBinding.tvProductTotal.setText(String.format(ctx.getString( R.string.suffix_rs_dash), model.getItemTotal()));
             itemLayoutBinding.btnRemove.setOnClickListener(v -> listener.onClick(DELETE_ITEM, position, model));
             itemLayoutBinding.getRoot().setOnClickListener(view -> listener.onClick(ROOT_VIEW, position, model));
         }

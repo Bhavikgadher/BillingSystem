@@ -68,15 +68,15 @@ public class ItemAddEditDialog {
             if (Objects.equals( itemUom, "Kg" )) {
                 multiplier = 1;
             } else if (Objects.equals( itemUom, "Gram" )) {
-                multiplier = 1d/ 1000;
+                multiplier = 1d / 1000;
             }
-            calculateTotal(pricePerUnit,qty, multiplier );
+            calculateTotal( pricePerUnit, qty, multiplier );
         } );
 
         if (model != null) {
-            binding.tieProductName.setText( model.getItemName() );
-            binding.tiePrice.setText( model.getItemPrice() );
-            binding.tieQty.setText( model.getItemQuantity() );
+            binding.tieProductName.setText( model.getName() );
+            binding.tieTotalPrice.setText( model.getTotal() );
+            binding.tieQty.setText( model.getQuantity() );
         }
 
         binding.tieUnitPrice.addTextChangedListener( new TextWatcher() {
@@ -89,7 +89,7 @@ public class ItemAddEditDialog {
                 int temp = stringToInt( s.toString() );
                 if (temp != -1) {
                     pricePerUnit = temp;
-                    calculateTotal(pricePerUnit,qty, multiplier );
+                    calculateTotal( pricePerUnit, qty, multiplier );
                 } else {
                     Toast.makeText( context, "please enter valid unit price", Toast.LENGTH_SHORT ).show();
                 }
@@ -109,7 +109,7 @@ public class ItemAddEditDialog {
                 int temp = stringToInt( s.toString() );
                 if (temp != -1) {
                     qty = temp;
-                    calculateTotal(pricePerUnit,qty, multiplier );
+                    calculateTotal( pricePerUnit, qty, multiplier );
                 } else {
                     Toast.makeText( context, "please enter valid quantity", Toast.LENGTH_SHORT ).show();
                 }
@@ -125,32 +125,32 @@ public class ItemAddEditDialog {
         } );
         binding.btnOkay.setOnClickListener( view -> {
             String name = binding.tieProductName.getText().toString();
-            String price = binding.tiePrice.getText().toString();
+            String unitPrice = binding.tieUnitPrice.getText().toString();
             String qty = binding.tieQty.getText().toString();
+            String total = binding.tieTotalPrice.getText().toString();
             int qtyNum = stringToInt( qty );
-            int priceNum = stringToInt( price );
+            float unitPriceNum = stringToInt( unitPrice );
             if (name.isEmpty()) {
                 binding.tieProductName.setError( "Please enter product name" );
-            } /*else if (price.isEmpty()) {
-                binding.tiePrice.setError( "Please enter price" );
-            } else if (priceNum == -1) {
-                binding.tiePrice.setError( "Please enter valid price" );
-            } */else if (qty.isEmpty()) {
+            } else if (unitPrice.isEmpty()) {
+                binding.tieUnitPrice.setError( "Please enter unit price" );
+            } else if (unitPriceNum == -1 || unitPriceNum == 0) {
+                binding.tieUnitPrice.setError( "Please enter valid unit price" );
+            } else if (qty.isEmpty()) {
                 binding.tieQty.setError( "Please enter quantity" );
-            } else if (qtyNum == -1) {
+            } else if (qtyNum == -1 || qtyNum == 0) {
                 binding.tieQty.setError( "Please enter valid quantity" );
             } else if (itemUom == null) {
                 binding.actvUom.setError( "Please select weight" );
             } else {
                 if (model == null) {
-                    int total = priceNum * qtyNum;
-                    model = new ItemModel( name, qty, price, String.valueOf( total ), itemUom );
+                    model = new ItemModel( name, qty, unitPrice, total, itemUom );
                 } else {
-                    int total = priceNum * qtyNum;
-                    model.setItemName( name );
-                    model.setItemPrice( price );
-                    model.setItemName( qty );
-                    model.setItemTotal( String.valueOf( total ) );
+                    model.setName( name );
+                    model.setPrice(unitPrice );
+                    model.setQuantity( qty );
+                    model.setTotal( total );
+
                 }
                 listener.onClick( ADD_EDIT_ITEM, -1, model );
                 closeDialog();
@@ -163,10 +163,11 @@ public class ItemAddEditDialog {
         // 1000*5*1 = 5000
         //price per kg 1000, qty 5, selection is gram
         // 1000*5*0.001 = 5
-        Log.e("LOG_LOG"," : "+priceInKg+" : "+qtyInKg+" : "+multiplier+" : ");
-        binding.tiePrice.setText( String.valueOf( priceInKg * qtyInKg * multiplier ) );
+        Log.e( "LOG_LOG", " : " + priceInKg + " : " + qtyInKg + " : " + multiplier + " : " );
+        binding.tieTotalPrice.setText( String.valueOf( priceInKg * qtyInKg * multiplier ) );
     }
-//
+
+    //
     public void showDialog() {
         if (dialog != null) {
             dialog.show();
